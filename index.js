@@ -201,7 +201,7 @@ function getItems(options, fn) {
 function scan(options, fn) {
   options.source.dynamoClient.scan({
     TableName: options.source.tableName,
-    Limit: 250,
+    Limit: 25,
     ExclusiveStartKey: options.key
   }, fn)
 }
