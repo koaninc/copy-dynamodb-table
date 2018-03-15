@@ -1,5 +1,6 @@
 'use strict'
 var AWS = require('aws-sdk')
+var readline = require('readline');
 var validate = require('./validate')
 
 function copy(values, fn) {
@@ -144,8 +145,8 @@ function waitForActive(options,fn){
       }
       if (options.log) {
         options.destination.createTableStr += '.'
-        process.stdout.clearLine()
-        process.stdout.cursorTo(0)
+        readline.clearLine(process.stdout)
+        readline.cursorTo(process.stdout, 0)
         process.stdout.write(options.destination.createTableStr)
       }
       if(data.Table.TableStatus !== 'ACTIVE'){ // wait for active
@@ -171,8 +172,8 @@ function startCopying(options,fn){
       }
 
       if (options.log) {
-        process.stdout.clearLine()
-        process.stdout.cursorTo(0)
+        readline.clearLine(process.stdout)
+        readline.cursorTo(process.stdout, 0)
         process.stdout.write('Copied ' + options.counter + ' items')
       }
 
@@ -200,7 +201,7 @@ function getItems(options, fn) {
 function scan(options, fn) {
   options.source.dynamoClient.scan({
     TableName: options.source.tableName,
-    Limit: 25,
+    Limit: 250,
     ExclusiveStartKey: options.key
   }, fn)
 }
